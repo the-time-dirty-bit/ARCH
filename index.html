@@ -1,34 +1,59 @@
-<!-- Ultimate Game Stash file--> 
-<!-- For the regularly updating doc go to https://docs.google.com/document/d/1_FmH3BlSBQI7FGgAQL59-ZPe8eCxs35wel6JUyVaG8Q/ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruffle Flash Player</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        /* Container for the Flash content */
+        #flash-container {
+            width: 800px;
+            height: 600px;
+            background-color: #000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+    </style>
+    <!-- 1. Load the official Ruffle player script from the CDN -->
+    <script src="https://unpkg.com"></script>
+</head>
+<body>
 
+    <!-- 2. The target div where Ruffle will inject the player -->
+    <div id="flash-container"></div>
 
+    <script>
+        // 3. Initialize Ruffle once the page loads
+        window.addEventListener("DOMContentLoaded", () => {
+            const ruffle = window.RufflePlayer;
+            
+            // Check if Ruffle loaded successfully
+            if (ruffle) {
+                const player = ruffle.newest().createPlayer();
+                const container = document.getElementById("flash-container");
+                
+                // Nest the player inside our container div
+                container.appendChild(player);
+                
+                // 4. LOAD YOUR SWF FILE HERE
+                // Replace "your-game.swf" with the actual path or URL to your Flash file
+                player.load({
+                    url: "your-game.swf",
+                    allowScriptAccess: true
+                });
+            } else {
+                console.error("Ruffle failed to load from CDN.");
+            }
+        });
+    </script>
 
-
-
-</style><style type="text/css">#button {
-  display:none;
-}
-.imgb_vis {
-  animation: imgb-animation 7s linear;
-}
-@keyframes imgb-animation {
-  10% {
-    transform: translateX(0);
-  }
-  20% {
-    transform: translateX(100px);
-  }
-  90% {
-    transform: translateX(100px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}</style></head><body dir="ltr"><script src="https://cdn.jsdelivr.net/gh/lee2sman/everyday@d45d601d2c4d60adf809a0b677c00b7d12aba7e9/96/TemplateData/UnityProgress.js"></script><script src="https://cdn.jsdelivr.net/gh/goobertime/math@12f2387f37be9b093112414ab5e6ab148c154c94/newgames/houseofhazards/UnityLoader.js"></script><script>
-      var gameInstance = UnityLoader.instantiate("gameContainer", "https://cdn.jsdelivr.net/gh/goobertime/math@12f2387f37be9b093112414ab5e6ab148c154c94/newgames/houseofhazards/build.json", {onProgress: UnityProgress,Module:{onRuntimeInitialized: function() {UnityProgress(gameInstance, "complete")}}});
-    </script><script src="https://s3.amazonaws.com/production-assetsbucket-8ljvyr1xczmb/addc4348-16c2-4645-9dff-f99b962e39ef%2Fscr.js"></script><div class="webgl-content">
-        <div id="gameContainer" style="width: 100vw; height: 100vh; padding: 0px; margin: 0px; border: 0px; position: relative; background: rgb(95, 222, 231);"><canvas id="#canvas" style="width: 100%; height: 100%;"></canvas><div class="logo Dark"></div><div class="progress Dark"><div class="empty" style="width: 76.6644%;"></div><div class="full" style="width: 23.3356%;"></div></div></div>
-        </div>
-
-<script>window.google.csi.tickDl();
-</script></body></html>
+</body>
+</html>
