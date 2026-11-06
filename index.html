@@ -13,44 +13,48 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            color: #fff;
+            font-family: sans-serif;
         }
-        /* Container for the Flash content */
-        #flash-container {
+        #player-container {
             width: 800px;
             height: 600px;
-            background-color: #000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            max-width: 100%;
+            max-height: 100vh;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
     </style>
-    <!-- 1. Load the official Ruffle player script from the CDN -->
-    <script src="https://unpkg.com"></script>
+    <!-- Load the official Ruffle library from the unpkg CDN -->
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 </head>
 <body>
 
-    <!-- 2. The target div where Ruffle will inject the player -->
-    <div id="flash-container"></div>
+    <!-- This div acts as the container where the Ruffle player will be inserted -->
+    <div id="player-container"></div>
 
     <script>
-        // 3. Initialize Ruffle once the page loads
         window.addEventListener("DOMContentLoaded", () => {
-            const ruffle = window.RufflePlayer;
-            
             // Check if Ruffle loaded successfully
-            if (ruffle) {
-                const player = ruffle.newest().createPlayer();
-                const container = document.getElementById("flash-container");
+            const ruffle = window.RufflePlayer?.newest();
+            const container = document.getElementById("player-container");
+            
+            if (ruffle && container) {
+                // Create an instance of the player
+                const player = ruffle.createPlayer();
                 
-                // Nest the player inside our container div
+                // Style the player to fill up its parent container
+                player.style.width = "100%";
+                player.style.height = "100%";
                 container.appendChild(player);
                 
-                // 4. LOAD YOUR SWF FILE HERE
-                // Replace "your-game.swf" with the actual path or URL to your Flash file
+                // Load your SWF file here
+                // Replace 'your-game.swf' with the actual path or URL to your Flash file
                 player.load({
                     url: "your-game.swf",
                     allowScriptAccess: true
                 });
             } else {
-                console.error("Ruffle failed to load from CDN.");
+                container.textContent = "Ruffle failed to load from the CDN.";
             }
         });
     </script>
